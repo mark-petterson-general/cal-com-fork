@@ -6,9 +6,7 @@ services:
     plan: free
     autoDeploy: false
     buildCommand: bash render-setup.sh
-    startCommand: |
-      yarn build &&
-      yarn start
+    startCommand: yarn dev
     envVars:
       - key: RENDER_POSTGRES_CONN_STR
         fromDatabase:
