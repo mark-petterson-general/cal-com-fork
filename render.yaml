@@ -4,6 +4,7 @@ services:
     runtime: node
     region: frankfurt
     plan: free
+    autoDeploy: false
     buildCommand: bash render-setup.sh
     startCommand: |
       yarn build &&
@@ -26,6 +27,7 @@ services:
 
 databases:
   - name: dev-postgres
+    region: frankfurt
     databaseName: caldb
     user: caluser
     plan: free
