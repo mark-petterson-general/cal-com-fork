@@ -19,3 +19,5 @@ sed -i -e "s|^DAILY_API_KEY=.*|DAILY_API_KEY=${RENDER_DAILY_API_KEY}|" \
 echo "DATABASE_URL=${RENDER_POSTGRES_CONN_STR}" >> env.appStore
 
 yarn workspace @calcom/prisma db-deploy
+
+yarn build
