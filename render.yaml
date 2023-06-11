@@ -1,0 +1,61 @@
+services:
+  - type: web
+    name: cal-com
+    runtime: node
+    region: frankfurt
+    plan: free
+    buildCommand: |
+      yarn &&
+      cp .env.example .env &&
+      sed -i -e "s|^NEXTAUTH_SECRET=.*|NEXTAUTH_SECRET=${RENDER_NEXTAUTH_SECRET}|" \
+             -e "s|^CALENDSO_ENCRYPTION_KEY=.*|CALENDSO_ENCRYPTION_KEY=${RENDER_CALENDSO_ENCRYPTION_KEY}|" \
+             -e "s|^DATABASE_URL=.*|DATABASE_URL=${RENDER_POSTGRES_CONN_STR}|" \
+             .env &&
+      cp .env.appStore.example .env.appStore &&
+      sed -i -e "s|^DAILY_API_KEY=.*|DAILY_API_KEY=${RENDER_DAILY_API_KEY}|" \
+             .env.appStore &&
+      echo "DATABASE_URL=${RENDER_POSTGRES_CONN_STR}" >> env.appStore &&
+      yarn workspace @calcom/prisma db-deploy 
+    # to add more env vars use:
+    # -e "s|^AAAA=.*|AAAA=${BBBB}|" \
+    startCommand: |
+      yarn build &&
+      yarn start
+    envVars:
+      - key: RENDER_POSTGRES_CONN_STR
+        fromDatabase:
+          name: dev-postgres
+          property: connectionString
+          
+      - key: RENDER_NEXTAUTH_SECRET
+        generateValue: true
+          
+      - key: RENDER_CALENDSO_ENCRYPTION_KEY
+        generateValue: true
+        
+      - key: RENDER_DAILY_API_KEY
+        sync: false
+  
+
+databases:
+  - name: dev-postgres
+    databaseName: caldb
+    user: caluser
+    plan: free
+    ipAllowList: [] # only allow internal connections
+    postgresMajorVersion: 15
+
+
+# available database envVars properties are listed below
+    # host
+    # port
+    # database is the PostgreSQL database name (not the friendly name)
+    # user
+    # password
+    # connectionString
+
+# available regions
+# oregon
+# frankfurt
+# ohio
+# singapore
