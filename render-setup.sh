@@ -1,5 +1,7 @@
 #!/bin/bash
 
+yarn config set enableImmutableInstalls false
+
 yarn install
 
 cp .env.example .env
