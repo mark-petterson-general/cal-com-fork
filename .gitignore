@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# mpett added stuff
+/users.log
+
 # .env file
 .env
 !packages/prisma/.env

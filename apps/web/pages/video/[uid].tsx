@@ -228,15 +228,10 @@ export function VideoMeetingInfo(props: VideoMeetingInfo) {
           <h3>{t("who")}:</h3>
           <p>
             {booking?.user?.name} - {t("organizer")}:{" "}
-            <a href={`mailto:${booking?.user?.email}`}>{booking?.user?.email}</a>
           </p>
 
           {booking.attendees.length
-            ? booking.attendees.map((attendee) => (
-                <p key={attendee.id}>
-                  {attendee.name} – <a href={`mailto:${attendee.email}`}>{attendee.email}</a>
-                </p>
-              ))
+            ? booking.attendees.map((attendee) => <p key={attendee.id}>{attendee.name}</p>)
             : null}
 
           {booking.description && (

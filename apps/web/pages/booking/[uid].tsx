@@ -436,17 +436,20 @@ export default function Success(props: SuccessProps) {
                             <div className="mb-3">
                               <div>
                                 <span className="mr-2">{bookingInfo.user.name}</span>
-                                <Badge variant="blue">{t("Host")}</Badge>
+                                <Badge variant="blue">{t("Mentor")}</Badge>
                               </div>
-                              <p className="text-default">{bookingInfo.user.email}</p>
+                              <p className="text-default"> </p>
                             </div>
                           )}
                           {bookingInfo?.attendees.map((attendee) => (
                             <div key={attendee.name + attendee.email} className="mb-3 last:mb-0">
                               {attendee.name && (
-                                <p data-testid={`attendee-name-${attendee.name}`}>{attendee.name}</p>
+                                <p data-testid={`attendee-name-${attendee.name}`}>
+                                  {attendee.name} &nbsp;
+                                  <Badge variant="blue">{t("Service User")}</Badge>
+                                </p>
                               )}
-                              <p data-testid={`attendee-email-${attendee.email}`}>{attendee.email}</p>
+                              <p data-testid="attendee-email"> </p>
                             </div>
                           ))}
                         </div>
