@@ -2,7 +2,20 @@
 version: "3.6"
 services:    
   mailhog:
-    image: 'mailhog/mailhog:latest'
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM mailhog/mailhog:v1.0.1
+        WORKDIR /
+        RUN mkdir -p /var/local/mail_storage
+        RUN chmod a+w /var/local/mail_storage
+    # image: 'mailhog/mailhog:latest'
     ports:
       - "1025:1025"
       - "8025:8025"
+    volumes:
+      - mail_data:/var/local/mail_storage
+    command: ["-storage=maildir", "-maildir-path=/var/local/mail_storage"]
+
+volumes:
+  mail_data:

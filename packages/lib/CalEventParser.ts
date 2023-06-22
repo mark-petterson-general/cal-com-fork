@@ -39,21 +39,18 @@ export const getWho = (calEvent: CalendarEvent, t: TFunction) => {
     .map((attendee) => {
       return `
 ${attendee?.name || t("guest")}
-${attendee.email}
       `;
     })
     .join("");
 
   const organizer = `
 ${calEvent.organizer.name} - ${t("organizer")}
-${calEvent.organizer.email}
   `;
 
   const teamMembers = calEvent.team?.members
     ? calEvent.team.members.map((member) => {
         return `
 ${member.name} - ${t("team_member")} 
-${member.email}
     `;
       })
     : [];
